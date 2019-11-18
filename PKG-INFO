@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
 Name: xgboost
-Version: 0.90
+Version: 0.90-plus
 Summary: XGBoost Python Package
 Home-page: https://github.com/dmlc/xgboost
 Maintainer: Hyunsu Cho
