@@ -217,3 +217,8 @@ tags
 [._]*.un~
 
 # End of https://www.gitignore.io/api/c++,vim,linux,macos,python,jupyternotebooks
+
+dtest.buffer
+xgb.model
+xgb.model.dart
+xgb_tc.model
