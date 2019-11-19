@@ -486,11 +486,12 @@ class GPUPredictor : public xgboost::Predictor {
   }
 
   void PredictContribution(DMatrix* p_fmat,
+                           bst_float reg_lambda,
                            std::vector<bst_float>* out_contribs,
                            const gbm::GBTreeModel& model, unsigned ntree_limit,
                            bool approximate, int condition,
                            unsigned condition_feature) override {
-    cpu_predictor_->PredictContribution(p_fmat, out_contribs, model, ntree_limit,
+    cpu_predictor_->PredictContribution(p_fmat, reg_lambda, out_contribs, model, ntree_limit,
                                        approximate, condition,
                                        condition_feature);
   }

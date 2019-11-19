@@ -100,6 +100,7 @@ class Learner : public rabit::Serializable {
   /*!
    * \brief get prediction given the model.
    * \param data input data
+   * \param reg_lambda L2 regularization parameter.
    * \param output_margin whether to only predict margin value instead of transformed prediction
    * \param out_preds output vector that stores the prediction
    * \param ntree_limit limit number of trees used for boosted tree
@@ -110,6 +111,7 @@ class Learner : public rabit::Serializable {
    * \param pred_interactions whether to compute the feature pair contributions
    */
   virtual void Predict(DMatrix* data,
+                       bst_float reg_lambda,
                        bool output_margin,
                        HostDeviceVector<bst_float> *out_preds,
                        unsigned ntree_limit = 0,

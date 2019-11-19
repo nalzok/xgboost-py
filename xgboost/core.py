@@ -1204,7 +1204,7 @@ class Booster(object):
         self._validate_features(data)
         return self.eval_set([(data, name)], iteration)
 
-    def predict(self, data, output_margin=False, ntree_limit=0, pred_leaf=False,
+    def predict(self, data, reg_lambda=0.0, output_margin=False, ntree_limit=0, pred_leaf=False,
                 pred_contribs=False, approx_contribs=False, pred_interactions=False,
                 validate_features=True):
         """
@@ -1231,6 +1231,9 @@ class Booster(object):
         ----------
         data : DMatrix
             The dmatrix storing the input.
+
+        reg_lambda: float
+            L2 regularization parameter used to train the Booster.
 
         output_margin : bool
             Whether to output the raw untransformed margin value.
@@ -1286,6 +1289,7 @@ class Booster(object):
         length = c_bst_ulong()
         preds = ctypes.POINTER(ctypes.c_float)()
         _check_call(_LIB.XGBoosterPredict(self.handle, data.handle,
+                                          ctypes.c_float(reg_lambda),
                                           ctypes.c_int(option_mask),
                                           ctypes.c_uint(ntree_limit),
                                           ctypes.byref(length),

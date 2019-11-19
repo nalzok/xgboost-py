@@ -195,6 +195,7 @@ bst_float RegTree::FillNodeMeanValue(int nid) {
 }
 
 void RegTree::CalculateContributionsApprox(const RegTree::FVec &feat,
+                                           bst_float reg_lambda,
                                            unsigned root_id,
                                            bst_float *out_contribs) const {
   CHECK_GT(this->node_mean_values_.size(), 0U);

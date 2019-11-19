@@ -125,6 +125,7 @@ class GBLinear : public GradientBooster {
   }
 
   void PredictContribution(DMatrix* p_fmat,
+                           const bst_float reg_lambda,
                            std::vector<bst_float>* out_contribs,
                            unsigned ntree_limit, bool approximate, int condition = 0,
                            unsigned condition_feature = 0) override {

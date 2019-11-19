@@ -41,12 +41,12 @@ TEST(cpu_predictor, Test) {
 
   // Test predict contribution
   std::vector<float> out_contribution;
-  cpu_predictor->PredictContribution((*dmat).get(), &out_contribution, model);
+  cpu_predictor->PredictContribution((*dmat).get(), 0.0f, &out_contribution, model);
   for (auto const& contri : out_contribution) {
     ASSERT_EQ(contri, 1.5);
   }
   // Test predict contribution (approximate method)
-  cpu_predictor->PredictContribution((*dmat).get(), &out_contribution, model, true);
+  cpu_predictor->PredictContribution((*dmat).get(), 0.0f, &out_contribution, model, true);
   for (auto const& contri : out_contribution) {
     ASSERT_EQ(contri, 1.5);
   }
@@ -81,7 +81,7 @@ TEST(cpu_predictor, ExternalMemoryTest) {
 
   // Test predict contribution
   std::vector<float> out_contribution;
-  cpu_predictor->PredictContribution(dmat.get(), &out_contribution, model);
+  cpu_predictor->PredictContribution(dmat.get(), 0.0f, &out_contribution, model);
   EXPECT_EQ(out_contribution.size(), dmat->Info().num_row_);
   for (const auto& v : out_contribution) {
     ASSERT_EQ(v, 1.5);
@@ -89,7 +89,7 @@ TEST(cpu_predictor, ExternalMemoryTest) {
 
   // Test predict contribution (approximate method)
   std::vector<float> out_contribution_approximate;
-  cpu_predictor->PredictContribution(dmat.get(), &out_contribution_approximate, model, true);
+  cpu_predictor->PredictContribution(dmat.get(), 0.0f, &out_contribution_approximate, model, true);
   EXPECT_EQ(out_contribution_approximate.size(), dmat->Info().num_row_);
   for (const auto& v : out_contribution_approximate) {
     ASSERT_EQ(v, 1.5);

@@ -383,6 +383,7 @@ XGB_DLL int XGBoosterEvalOneIter(BoosterHandle handle,
  * \brief make prediction based on dmat
  * \param handle handle
  * \param dmat data matrix
+ * \param reg_lambda L2 regularization parameter.
  * \param option_mask bit-mask of options taken in prediction, possible values
  *          0:normal prediction
  *          1:output margin instead of transformed value
@@ -396,6 +397,7 @@ XGB_DLL int XGBoosterEvalOneIter(BoosterHandle handle,
  */
 XGB_DLL int XGBoosterPredict(BoosterHandle handle,
                              DMatrixHandle dmat,
+                             float reg_lambda,
                              int option_mask,
                              unsigned ntree_limit,
                              bst_ulong *out_len,

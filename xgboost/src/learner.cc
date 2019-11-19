@@ -573,12 +573,12 @@ class LearnerImpl : public Learner {
                                    tparam_.dsplit == DataSplitMode::kRow));
   }
 
-  void Predict(DMatrix* data, bool output_margin,
+  void Predict(DMatrix* data, bst_float reg_lambda, bool output_margin,
                HostDeviceVector<bst_float>* out_preds, unsigned ntree_limit,
                bool pred_leaf, bool pred_contribs, bool approx_contribs,
                bool pred_interactions) const override {
     if (pred_contribs) {
-      gbm_->PredictContribution(data, &out_preds->HostVector(), ntree_limit, approx_contribs);
+      gbm_->PredictContribution(data, reg_lambda, &out_preds->HostVector(), ntree_limit, approx_contribs);
     } else if (pred_interactions) {
       gbm_->PredictInteractionContributions(data, &out_preds->HostVector(), ntree_limit,
                                             approx_contribs);

@@ -114,6 +114,7 @@ class GradientBooster {
    * \brief feature contributions to individual predictions; the output will be a vector
    *         of length (nfeats + 1) * num_output_group * nsample, arranged in that order
    * \param dmat feature matrix
+   * \param reg_lambda L2 regularization parameter.
    * \param out_contribs output vector to hold the contributions
    * \param ntree_limit limit the number of trees used in prediction, when it equals 0, this means
    *    we do not limit number of trees
@@ -122,6 +123,7 @@ class GradientBooster {
    * \param condition_feature feature to condition on (i.e. fix) during calculations
    */
   virtual void PredictContribution(DMatrix* dmat,
+                           bst_float reg_lambda,
                            std::vector<bst_float>* out_contribs,
                            unsigned ntree_limit = 0, bool approximate = false,
                            int condition = 0, unsigned condition_feature = 0) = 0;

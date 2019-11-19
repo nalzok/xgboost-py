@@ -931,6 +931,7 @@ XGB_DLL int XGBoosterEvalOneIter(BoosterHandle handle,
 
 XGB_DLL int XGBoosterPredict(BoosterHandle handle,
                              DMatrixHandle dmat,
+                             bst_float reg_lambda,
                              int option_mask,
                              unsigned ntree_limit,
                              xgboost::bst_ulong *len,
@@ -944,6 +945,7 @@ XGB_DLL int XGBoosterPredict(BoosterHandle handle,
   HostDeviceVector<bst_float> tmp_preds;
   bst->learner()->Predict(
       static_cast<std::shared_ptr<DMatrix>*>(dmat)->get(),
+      reg_lambda,
       (option_mask & 1) != 0,
       &tmp_preds, ntree_limit,
       (option_mask & 2) != 0,

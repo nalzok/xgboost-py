@@ -248,7 +248,7 @@ class CPUPredictor : public Predictor {
     }
   }
 
-  void PredictContribution(DMatrix* p_fmat, std::vector<bst_float>* out_contribs,
+  void PredictContribution(DMatrix* p_fmat, bst_float reg_lambda, std::vector<bst_float>* out_contribs,
                            const gbm::GBTreeModel& model, unsigned ntree_limit,
                            bool approximate,
                            int condition,
@@ -298,7 +298,7 @@ class CPUPredictor : public Predictor {
               model.trees[j]->CalculateContributions(feats, root_id, p_contribs,
                                                      condition, condition_feature);
             } else {
-              model.trees[j]->CalculateContributionsApprox(feats, root_id, p_contribs);
+              model.trees[j]->CalculateContributionsApprox(feats, reg_lambda, root_id, p_contribs);
             }
           }
           feats.Drop(batch[i]);
@@ -333,10 +333,10 @@ class CPUPredictor : public Predictor {
     // Compute the difference in effects when conditioning on each of the features on and off
     // see: Axiomatic characterizations of probabilistic and
     //      cardinal-probabilistic interaction indices
-    PredictContribution(p_fmat, &contribs_diag, model, ntree_limit, approximate, 0, 0);
+    PredictContribution(p_fmat, 0.0f, &contribs_diag, model, ntree_limit, approximate, 0, 0);
     for (size_t i = 0; i < ncolumns + 1; ++i) {
-      PredictContribution(p_fmat, &contribs_off, model, ntree_limit, approximate, -1, i);
-      PredictContribution(p_fmat, &contribs_on, model, ntree_limit, approximate, 1, i);
+      PredictContribution(p_fmat, 0.0f, &contribs_off, model, ntree_limit, approximate, -1, i);
+      PredictContribution(p_fmat, 0.0f, &contribs_on, model, ntree_limit, approximate, 1, i);
 
       for (size_t j = 0; j < info.num_row_; ++j) {
         for (int l = 0; l < ngroup; ++l) {

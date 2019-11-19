@@ -489,10 +489,11 @@ class RegTree {
   /*!
    * \brief calculate the approximate feature contributions for the given root
    * \param feat dense feature vector, if the feature is missing the field is set to NaN
+   * \param reg_lambda L2 regularization parameter
    * \param root_id starting root index of the instance
    * \param out_contribs output vector to hold the contributions
    */
-  void CalculateContributionsApprox(const RegTree::FVec& feat, unsigned root_id,
+  void CalculateContributionsApprox(const RegTree::FVec& feat, bst_float reg_lambda, unsigned root_id,
                                     bst_float* out_contribs) const;
   /*!
    * \brief get next position of the tree given current pid

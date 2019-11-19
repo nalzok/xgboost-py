@@ -75,8 +75,8 @@ TEST(gpu_predictor, Test) {
   // Test predict contribution
   std::vector<float> gpu_out_contribution;
   std::vector<float> cpu_out_contribution;
-  cpu_predictor->PredictContribution((*dmat).get(), &cpu_out_contribution, model);
-  gpu_predictor->PredictContribution((*dmat).get(), &gpu_out_contribution, model);
+  cpu_predictor->PredictContribution((*dmat).get(), 0.0f, &cpu_out_contribution, model);
+  gpu_predictor->PredictContribution((*dmat).get(), 0.0f, &gpu_out_contribution, model);
   for (int i = 0; i < gpu_out_contribution.size(); i++) {
     ASSERT_EQ(gpu_out_contribution[i], cpu_out_contribution[i]);
   }
@@ -109,7 +109,7 @@ TEST(gpu_predictor, ExternalMemoryTest) {
 
   // Test predict contribution
   std::vector<float> out_contribution;
-  gpu_predictor->PredictContribution(dmat.get(), &out_contribution, model);
+  gpu_predictor->PredictContribution(dmat.get(), 0.0f, &out_contribution, model);
   EXPECT_EQ(out_contribution.size(), dmat->Info().num_row_);
   for (const auto& v : out_contribution) {
     ASSERT_EQ(v, 1.5);
@@ -117,7 +117,7 @@ TEST(gpu_predictor, ExternalMemoryTest) {
 
   // Test predict contribution (approximate method)
   std::vector<float> out_contribution_approximate;
-  gpu_predictor->PredictContribution(dmat.get(), &out_contribution_approximate, model, true);
+  gpu_predictor->PredictContribution(dmat.get(), 0.0f, &out_contribution_approximate, model, true);
   EXPECT_EQ(out_contribution_approximate.size(), dmat->Info().num_row_);
   for (const auto& v : out_contribution_approximate) {
     ASSERT_EQ(v, 1.5);

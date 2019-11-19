@@ -132,7 +132,7 @@ class Predictor {
                            unsigned ntree_limit = 0) = 0;
 
   /**
-   * \fn  virtual void Predictor::PredictContribution( DMatrix* dmat,
+   * \fn  virtual void Predictor::PredictContribution( DMatrix* dmat, bst_float reg_lambda,
    * std::vector<bst_float>* out_contribs, const gbm::GBTreeModel& model,
    * unsigned ntree_limit = 0) = 0;
    *
@@ -141,6 +141,7 @@ class Predictor {
    * that order.
    *
    * \param [in,out]  dmat               The input feature matrix.
+   * \param           reg_lambda         L2 regularization parameter.
    * \param [in,out]  out_contribs       The output feature contribs.
    * \param           model              Model to make predictions from.
    * \param           ntree_limit        (Optional) The ntree limit.
@@ -150,6 +151,7 @@ class Predictor {
    */
 
   virtual void PredictContribution(DMatrix* dmat,
+                                   bst_float reg_lambda,
                                    std::vector<bst_float>* out_contribs,
                                    const gbm::GBTreeModel& model,
                                    unsigned ntree_limit = 0,
