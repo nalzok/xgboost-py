@@ -169,26 +169,28 @@ std::string RegTree::DumpModel(const FeatureMap& fmap,
   }
   return fo.str();
 }
-void RegTree::FillNodeMeanValues() {
+void RegTree::FillNodeMeanValues(bst_float reg_lambda) {
   size_t num_nodes = this->param.num_nodes;
   if (this->node_mean_values_.size() == num_nodes) {
     return;
   }
   this->node_mean_values_.resize(num_nodes);
   for (int root_id = 0; root_id < param.num_roots; ++root_id) {
-    this->FillNodeMeanValue(root_id);
+    this->FillNodeMeanValue(root_id, reg_lambda);
   }
 }
 
-bst_float RegTree::FillNodeMeanValue(int nid) {
+bst_float RegTree::FillNodeMeanValue(int nid, bst_float reg_lambda) {
   bst_float result;
   auto& node = (*this)[nid];
   if (node.IsLeaf()) {
     result = node.LeafValue();
   } else {
-    result  = this->FillNodeMeanValue(node.LeftChild()) * this->Stat(node.LeftChild()).sum_hess;
-    result += this->FillNodeMeanValue(node.RightChild()) * this->Stat(node.RightChild()).sum_hess;
-    result /= this->Stat(nid).sum_hess;
+    result  = this->FillNodeMeanValue(node.LeftChild(), reg_lambda) *
+        (this->Stat(node.LeftChild()).sum_hess + reg_lambda);
+    result += this->FillNodeMeanValue(node.RightChild(), reg_lambda) *
+        (this->Stat(node.RightChild()).sum_hess + reg_lambda);
+    result /= this->Stat(nid).sum_hess + reg_lambda;
   }
   this->node_mean_values_[nid] = result;
   return result;

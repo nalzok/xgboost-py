@@ -514,8 +514,9 @@ class RegTree {
                         std::string format) const;
   /*!
    * \brief calculate the mean value for each node, required for feature contributions
+   * \param reg_lambda L2 regularization parameter.
    */
-  void FillNodeMeanValues();
+  void FillNodeMeanValues(bst_float reg_lambda);
 
  private:
   // vector of nodes
@@ -549,7 +550,7 @@ class RegTree {
     nodes_[nid].MarkDelete();
     ++param.num_deleted;
   }
-  bst_float FillNodeMeanValue(int nid);
+  bst_float FillNodeMeanValue(int nid, bst_float reg_lambda);
 };
 
 inline void RegTree::FVec::Init(size_t size) {
