@@ -1,4 +1,10 @@
-.PHONY: test
+.PHONY: xgboost test
+
+xgboost:
+	( zsh -c "source ${HOME}/opt/miniconda3/bin/activate python3 && \
+		which python && \
+		sh ./xgboost/build-python.sh && \
+		pip install .")
 
 test:
 	( zsh -c "source ${HOME}/opt/miniconda3/bin/activate python3 && \
